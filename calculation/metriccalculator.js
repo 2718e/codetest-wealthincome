@@ -6,7 +6,7 @@ const _ = require('lodash')
 
 class MetricCalculator {
 
-    // Constructor, requires a data access object to be provided (dependency injection pattern).
+    // Constructor, requires a data access object to be provided as the repository parameter.
     constructor(repository){
         this.incomeInequality = (init, end) => {
             const data = repository.getIncome(init,end);
