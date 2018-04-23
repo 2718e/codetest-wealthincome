@@ -6,13 +6,29 @@ const _ = require('lodash')
 * 
 */
 
+
+function tryParseRange(requestParams){
+    const init = Number(requestParams.init);
+    const end = Number(requestParams.end);
+    const valid = (init && end && _.isInteger(init) && _.isInteger(end))
+    return {
+        valid: valid,
+        init: init,
+        end: end
+    };
+}
+
+function tryParseGroup(requestParams){
+    const group = Number(requestParams.group);
+    const valid = (group && _.isInteger(group) && (group === 50 || group === 10));
+    return {valid: valid, group: group};
+}
+
 // checks if the query string query contains valid integers as the init and end parameters,
 // if so gets data by calling fGetDataForPeriod and sends it to the response stream res.
 // if invalid sends a 400 bad request status 
 function sendResultOrBadRequest(query, fGetDataForPeriod, res){
-    const init = Number(query.init);
-    const end = Number(query.end);
-    const valid = (init && end && _.isInteger(init) && _.isInteger(end))
+    const {init, end, valid} = tryParseRange(query);
     if (valid){
         const result = fGetDataForPeriod(init,end);
         res.send({data: result});
@@ -31,6 +47,7 @@ function makeIncomeWealthRouter(repository, calculator){
     })
 
     const router = express.Router()
+    router.use(express.json());
 
     router.post('/upload', upload.single('data'), function(req, res){
         const csvText = req.file.buffer.toString();
@@ -51,6 +68,16 @@ function makeIncomeWealthRouter(repository, calculator){
     });
     router.get('/wealthinequality', function(req, res){
         sendResultOrBadRequest(req.query, calculator.wealthInequality, res);
+    });
+    router.post('/savingcapacity', function(req, res){
+        const parsedRange = tryParseRange(req.body);
+        const parsedGroup = tryParseGroup(req.body);
+        if (parsedRange.valid && parsedGroup.valid){
+            result = calculator.savingCapacityNormalized(parsedRange.init, parsedRange.end, parsedGroup.group);
+            res.send({data: result});
+        } else {
+            res.sendStatus(400);
+        }
     });
 
     return router;

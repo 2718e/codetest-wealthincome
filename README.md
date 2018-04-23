@@ -9,6 +9,6 @@ This API provides functions for uploading data about income distributions and co
 Remaining tasks
 
 - connect to an actual database instead of a mock
-- implement predicitors and other metrics
+- implement predicitors
 - more error checking e.g. is uploaded file correct format
 - add unit tests
