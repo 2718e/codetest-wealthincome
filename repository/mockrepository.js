@@ -2,7 +2,7 @@
 * This section of the code handles querying data. The intent is to use a "repository pattern"
 * to abstract the store.
 *
-* this particular implementation is a mock that just stores the database as an array in memory 
+* this particular implementation is a mock that just stores the database as an array in memory*
 */
 const _ = require('lodash')
 

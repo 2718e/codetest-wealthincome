@@ -12,4 +12,6 @@ const calculator = new MetricCalculator(repository)
 const incomeRoutes = income(repository, calculator)
 app.use('/', incomeRoutes);
 
-app.listen(3000, () => console.log("app listening on port 3000"));
+const server = app.listen(3000, () => {
+    console.log("app listening on port 3000");
+});
