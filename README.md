@@ -4,6 +4,12 @@ This project exists as an implementation of a coding challenge, the purpose of w
 
 This API provides functions for uploading data about income distributions and computing some statistics about them.
 
+## Installation
+
+This solution requires a mongodb connection to be specified in config. Mongo db must be installed separately (either on the local machine or a separate machine)
+
+Other than that, running npm install should install all required packages
+
 ## Roadmap
 
 Remaining tasks
