@@ -6,6 +6,11 @@
 */
 const _ = require('lodash')
 
+// allows async behaviour to be mocked
+function promisify(value) {
+    return new Promise( (resolve,reject) => resolve(value));
+}
+
 class InMemoryRepository {
 
     constructor() {
@@ -25,8 +30,8 @@ class InMemoryRepository {
                 period: data.map(row => row[0]),
                 income: data.map(row => row[1]),
                 wealth: data.map(row => row[2])
-            }
-            return result;
+            };
+            return promisify(result);
         };
         this.getBottom50 = (start,end) => {
             const data = selectPeriod(start,end);
@@ -35,7 +40,7 @@ class InMemoryRepository {
                 income: data.map(row => row[3]),
                 wealth: data.map(row => row[4])
             }
-            return result;
+            return promisify(result);
         };
         this.getIncome = (start,end) => {
             const data = selectPeriod(start,end);
@@ -44,7 +49,7 @@ class InMemoryRepository {
                 top10: data.map(row => row[1]),
                 bottom50: data.map(row => row[3])
             }
-            return result;
+            return promisify(result);
         };
         this.getWealth = (start,end) => {
             const data = selectPeriod(start,end);
@@ -53,7 +58,7 @@ class InMemoryRepository {
                 top10: data.map(row => row[2]),
                 bottom50: data.map(row => row[4])
             }
-            return result;
+            return promisify(result);
         };
     }
 }

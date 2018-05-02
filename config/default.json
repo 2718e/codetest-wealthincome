@@ -1,0 +1,9 @@
+{
+    "appSettings": {
+        "database" : {
+        "url" : "mongodb://localhost:27017",
+        "dbName": "WealthIncomeDb"
+        },
+        "port": "3000"
+    }
+}
