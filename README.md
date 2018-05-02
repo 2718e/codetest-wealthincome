@@ -8,7 +8,6 @@ This API provides functions for uploading data about income distributions and co
 
 Remaining tasks
 
-- connect to an actual database instead of a mock, possibly change database abstraction to be asynchronous.
 - implement predicitors
 - more error checking e.g. is uploaded file correct format
 - add unit tests
@@ -19,11 +18,13 @@ Remaining tasks
 
 While this part is not complete yet, I think the best way to make a predictor would be to use a (very small) RNN - however this might be limited by only having one dataset (risk of overfitting).
 
+Another way might be to use a function fitter or moving average - which could be implemented quicker but in this case would be even less confident of the results actually being correct.
+
 ### Database choice
 
-Given the tiny size of the data I think the most appropriate database choice is not to use one at all and store all the data in process memory, and persist to a file to handle restarts. 
+Given the tiny size of the dataset I'm not entirely sure a database makes sense at all. (e.g. Persisting the csv file to disk and storing in memory would be a suitable choice in this instance)
 
-However, for the sake of the exercise could use either SQLite ( as this is a traditional choice for database as a file format) or mongodb.
+However, since the exercise specified to use a database, went for mongodb as this works very well with nodejs.
 
 ### Design choices
 
@@ -31,6 +32,4 @@ Trying to structure the software around repository, dependency injection / IOC p
 
 The repository is responsible for formatting the results of get requests so as to not limit the ability of any database engine to handle as much of the result formatting as the database engine can. 
 
-Similarly, the api is not aware of how the predictor and calculator get the data they depend on - this is again to allow the possibility of implementing arbitrary amounts of the prediction and calculate functions in the database engine rather than in code.
-
-Because the data being predicted is all somewhat interrelated the interface to the predictor should be such that the a prediction is made for the wealth and income of both groups at the same time, then only the desired data is returned.
+Similarly, the api is not aware of how the predictor and calculator get the data they depend on - this is again to allow the possibility of implementing arbitrary amounts of the prediction and calculate functions in the database engine rather than in code. E.g. currently can pass an abstract repository to the MetricCalculator class, but it would be equally possible to implement a MetricCalculator that depends on a specific database choice later if that would be more performant.
