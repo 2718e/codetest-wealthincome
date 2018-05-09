@@ -16,7 +16,6 @@ Possible improvements
 
 - more error checking e.g. is uploaded file correct format.
 - add proper unit tests (i.e. that can be run with npm test) rather than just the Postman collection used for dev testing.
-- linting and code formatting.
 
 ## Comments
 

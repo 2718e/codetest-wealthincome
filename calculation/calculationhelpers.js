@@ -3,7 +3,7 @@
  */
 
 /** function for calculating functions that depend on both the value for one year and the previous -
- *  handles checking for null values and missing years,
+ *  handles checking for null values and missing years.
  *
  * @param {the array of years} years
  * @param {the array of values e.g. wealth or income} values
