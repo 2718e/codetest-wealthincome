@@ -1,0 +1,295 @@
+{
+	"info": {
+		"_postman_id": "cf4a1e7e-0602-49e4-acaa-d314c96d8380",
+		"name": "exercisewealthincome",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Upload File",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"description": "",
+							"type": "file"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/upload",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"upload"
+					]
+				},
+				"description": "test upload of csv file\n"
+			},
+			"response": []
+		},
+		{
+			"name": "gettop10",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:3000/top10?init=1970&end=1972",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"top10"
+					],
+					"query": [
+						{
+							"key": "init",
+							"value": "1970"
+						},
+						{
+							"key": "end",
+							"value": "1972"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "gettop10 invalid",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:3000/top10?init=1970&end=bluh",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"top10"
+					],
+					"query": [
+						{
+							"key": "init",
+							"value": "1970"
+						},
+						{
+							"key": "end",
+							"value": "bluh"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getBottom50",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:3000/bottom50?init=1970&end=1972",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"bottom50"
+					],
+					"query": [
+						{
+							"key": "init",
+							"value": "1970"
+						},
+						{
+							"key": "end",
+							"value": "1972"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "incomeinequality",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:3000/incomeinequality?init=1970&end=1972",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"incomeinequality"
+					],
+					"query": [
+						{
+							"key": "init",
+							"value": "1970"
+						},
+						{
+							"key": "end",
+							"value": "1972"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "wealthinequality",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:3000/wealthinequality?init=1970&end=1972",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"wealthinequality"
+					],
+					"query": [
+						{
+							"key": "init",
+							"value": "1970"
+						},
+						{
+							"key": "end",
+							"value": "1972"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "savingcapacityalldata50",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"group\":50,  \"init\":1952,  \"end\":2030}\r\n"
+				},
+				"url": {
+					"raw": "localhost:3000/savingcapacity",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"savingcapacity"
+					]
+				},
+				"description": "savings capacity with all data"
+			},
+			"response": []
+		},
+		{
+			"name": "savingcapacityalldata10",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"group\":10,  \"init\":1952,  \"end\":2030}\r\n"
+				},
+				"url": {
+					"raw": "localhost:3000/savingcapacity",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"savingcapacity"
+					]
+				},
+				"description": "savings capacity with all data"
+			},
+			"response": []
+		},
+		{
+			"name": "predictwealth",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"group\":50,  \"years\":20}\r\n"
+				},
+				"url": {
+					"raw": "localhost:3000/predictwealth",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"predictwealth"
+					]
+				},
+				"description": "savings capacity with all data"
+			},
+			"response": []
+		},
+		{
+			"name": "predictincome",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"group\":10,  \"years\":20}\r\n"
+				},
+				"url": {
+					"raw": "localhost:3000/predictincome",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"predictincome"
+					]
+				},
+				"description": "savings capacity with all data"
+			},
+			"response": []
+		}
+	]
+}

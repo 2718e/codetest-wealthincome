@@ -7,6 +7,11 @@
 
 class MongodbRepository {
 
+    /**
+     * creates a new data access object based on mongodb
+     * 
+     * @param {the database connection as returned from a call MongoClient.db} connection 
+     */
     constructor(connection) {
         const db = connection
         const getDataPromise = function (start, end, projection, mapping) {

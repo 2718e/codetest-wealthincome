@@ -2,7 +2,9 @@
  * This section of the code handles calculation of metrics e.g. inequality, saving capacity
  * from the raw data
  */
-const _ = require('lodash')
+const _ = require('lodash');
+const helpers = require('./calculationhelpers');
+
 
 class MetricCalculator {
 
@@ -32,26 +34,11 @@ class MetricCalculator {
                 throw "Invalid group"
             }
             return dataPromise.then(data => {
-                let period = [], savingCapacity = [];
-                if (!_.isEmpty(data.period)) {
-                    let prevYear = data.period[0];
-                    let prevWealth = data.wealth[0]
-                    for (let i = 1; i < data.period.length; i++) {
-                        let year = data.period[i];
-                        let wealth = data.wealth[i];
-                        // only calculate savings capacity when we have all data for 2 consecutive years
-                        if (prevYear && prevWealth && year && wealth && (year - prevYear == 1)) {
-                            period.push([prevYear, year]);
-                            savingCapacity.push(wealth / prevWealth);
-                        }
-                        prevYear = year;
-                        prevWealth = wealth;
-                    }
-                }
+                const results = helpers.calculateForTimespan(data.period, data.wealth, (wealth, prevWealth) => wealth / prevWealth);
                 return {
                     Group: group,
-                    period: period,
-                    savingcapacity: savingCapacity
+                    period: results.period,
+                    savingcapacity: results.result
                 };
             });
         };

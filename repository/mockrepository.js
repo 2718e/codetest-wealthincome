@@ -6,7 +6,7 @@
 */
 const _ = require('lodash')
 
-// allows async behaviour to be mocked
+// allows async behaviour to be mocked. Given a value returns a promise already resolved to that value
 function promisify(value) {
     return new Promise( (resolve,reject) => resolve(value));
 }

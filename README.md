@@ -12,19 +12,31 @@ Other than that, running npm install should install all required packages
 
 ## Roadmap
 
-Remaining tasks
+Possible improvements
 
-- implement predicitors
-- more error checking e.g. is uploaded file correct format
-- add unit tests
+- more error checking e.g. is uploaded file correct format.
+- add proper unit tests (i.e. that can be run with npm test) rather than just the Postman collection used for dev testing.
+- linting and code formatting.
 
 ## Comments
 
+### Known issues
+
+The saved collection of Postman calls used for dev testing didn't export the path to the test data file
+
 ### Predictors
 
-While this part is not complete yet, I think the best way to make a predictor would be to use a (very small) RNN - however this might be limited by only having one dataset (risk of overfitting).
+In order to implement something quickly prediction was done by taking a weighted average of the 1st derivative and using that to predict future values. However I feel this could be done better given more time.
 
-Another way might be to use a function fitter or moving average - which could be implemented quicker but in this case would be even less confident of the results actually being correct.
+What I would have ideally liked to do would be to 
+
+- get additional datasets from public sources
+- use these to train a recurrent neural net
+- import the trained model into the application and use it for prediction
+
+This approach however was constrained both by time and by it being unclear if tensorflow.js worked under node.js or if it was browser only.
+
+Also, in this approach I would have wanted to use all values (i.e. both the wealth and income of the top 10 and bottom 50) as an input vector rather than predict one sequece in isolation (as we would expect e.g. income ratio in one year to affect change in wealth in the next.)
 
 ### Database choice
 

@@ -24,6 +24,12 @@ function tryParseGroup(requestParams) {
     return { valid: valid, group: group };
 }
 
+function tryParseNYears(requestParams) {
+    const years = Number(requestParams.years);
+    const valid = (years && _.isInteger(years));
+    return { valid: valid, years: years };
+}
+
 // checks if the query string query contains valid integers as the init and end parameters,
 // if so gets data by calling fGetDataForPeriod and sends it to the response stream res.
 // if invalid sends a 400 bad request status 
@@ -40,7 +46,7 @@ function sendResultOrBadRequest(query, fGetPromiseOfData, res) {
 }
 
 // factory method to make the router for the income and wealth API
-function makeIncomeWealthRouter(repository, calculator) {
+function makeIncomeWealthRouter(repository, calculator, predictor) {
 
     const memoryStorage = multer.memoryStorage()
     const upload = multer({
@@ -53,8 +59,8 @@ function makeIncomeWealthRouter(repository, calculator) {
 
     router.post('/upload', upload.single('data'), function (req, res) {
         const csvText = req.file.buffer.toString();
-        const dataRows = csvText.split('\n') // array of lines
-            .map(line => line.trim().split(',').map(Number)); // split each line at commas and convert to number
+        const dataRows = csvText.split('\n')
+            .map(line => line.trim().split(',').map(Number));
         repository.setData(dataRows);
         res.send(200);
     })
@@ -75,14 +81,38 @@ function makeIncomeWealthRouter(repository, calculator) {
         const parsedRange = tryParseRange(req.body);
         const parsedGroup = tryParseGroup(req.body);
         if (parsedRange.valid && parsedGroup.valid) {
-            calculator.savingCapacityNormalized(parsedRange.init, parsedRange.end, parsedGroup.group).then(result => {
-                res.send({ data: result });
-            });
+            calculator.savingCapacityNormalized(parsedRange.init, parsedRange.end, parsedGroup.group)
+                .then(result => {
+                    res.send({ data: result });
+                });
         } else {
             res.sendStatus(400);
         }
     });
-
+    router.post('/predictwealth', function (req, res) {
+        const parsedYears = tryParseNYears(req.body);
+        const parsedGroup = tryParseGroup(req.body);
+        if (parsedYears.valid && parsedGroup.valid) {
+            predictor.predictWealth(parsedGroup.group, parsedYears.years)
+                .then(result => {
+                    res.send({ data: result });
+                });
+        } else {
+            res.sendStatus(400);
+        }
+    });
+    router.post('/predictincome', function (req, res) {
+        const parsedYears = tryParseNYears(req.body);
+        const parsedGroup = tryParseGroup(req.body);
+        if (parsedYears.valid && parsedGroup.valid) {
+            predictor.predictIncome(parsedGroup.group, parsedYears.years)
+                .then(result => {
+                    res.send({ data: result });
+                });
+        } else {
+            res.sendStatus(400);
+        }
+    });
     return router;
 }
 
